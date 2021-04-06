@@ -11,49 +11,72 @@ entry = Entry(root, font="Menlo 18", width=24, textvariable=screen_num)
 entry.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
 
 # Functions
+
 def write(value):
+    entry["state"] = NORMAL
     if (entry.get()).startswith("0"):
         screen_num.set((entry.get())[:-1])
     screen_num.set(entry.get() + value)
+    entry["state"] = DISABLED
 
 def delete():
+    entry["state"] = NORMAL
     entry.delete(0, END)
+    entry["state"] = DISABLED
+
+def delete_char():
+    entry["state"] = NORMAL
+    screen_num.set((entry.get())[:-1])
+    entry["state"] = DISABLED
 
 def toggle_symbol():
+    entry["state"] = NORMAL
     if (entry.get()).startswith("-"):
         entry.delete(0, 1)
     else:
         entry.insert(0, "-")
+    entry["state"] = DISABLED
 
 def percent():
+    entry["state"] = NORMAL
     screen_num.set(eval(entry.get() + "/100"))
+    entry["state"] = DISABLED
 
 def add():
     global n1, operation
+    entry["state"] = NORMAL
     n1 = entry.get()
     entry.delete(0, END)
     operation = "add"
+    entry["state"] = DISABLED
 
 def subtract():
     global n1, operation
+    entry["state"] = NORMAL
     n1 = entry.get()
     entry.delete(0, END)
     operation = "subtract"
+    entry["state"] = DISABLED
 
 def mult():
     global n1, operation
+    entry["state"] = NORMAL
     n1 = entry.get()
     entry.delete(0, END)
     operation = "mult"
+    entry["state"] = DISABLED
 
 def div():
     global n1, operation
+    entry["state"] = NORMAL
     n1 = entry.get()
     entry.delete(0, END)
     operation = "div"
+    entry["state"] = DISABLED
 
 def get_result():
     global n1, n2, operation
+    entry["state"] = NORMAL
     n2= entry.get()
     if operation == "add":
         screen_num.set(eval(f"{n1} + {n2}"))
@@ -63,6 +86,28 @@ def get_result():
         screen_num.set(eval(f"{n1} * {n2}"))
     elif operation == "div": 
         screen_num.set(eval(f"{n1} / {n2}"))
+    entry["state"] = DISABLED
+
+# Keybindings
+root.bind("<Return>", lambda x: get_result())
+root.bind("</>", lambda x: div())
+root.bind("<*>", lambda x: mult())
+root.bind("<+>", lambda x: add())
+root.bind("<minus>", lambda x: subtract())
+
+root.bind("<Key-1>", lambda x: write("1"))
+root.bind("<Key-2>", lambda x: write("2"))
+root.bind("<Key-3>", lambda x: write("3"))
+root.bind("<Key-4>", lambda x: write("4"))
+root.bind("<Key-5>", lambda x: write("5"))
+root.bind("<Key-6>", lambda x: write("6"))
+root.bind("<Key-7>", lambda x: write("7"))
+root.bind("<Key-8>", lambda x: write("8"))
+root.bind("<Key-9>", lambda x: write("9"))
+root.bind("<Key-0>", lambda x: write("0"))
+
+root.bind("<BackSpace>", lambda x: delete_char())
+root.bind("<Delete>", lambda x: delete())
 
 # Buttons
 button_1 = Button(root, text="1", width=3, height=2, command=lambda: write("1"))
@@ -115,5 +160,8 @@ button_plus.grid(row=4, column=3)
 button_0.grid(row=5, column=0, columnspan=2)
 button_point.grid(row=5, column=2)
 button_equals.grid(row=5, column=3)
+
+# Disable entry
+entry.config(disabledbackground="#EDECED" , disabledforeground="black", highlightthickness=2, state=DISABLED)
 
 root.mainloop()
