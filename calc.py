@@ -104,10 +104,12 @@ root.bind("<Key-6>", lambda x: write("6"))
 root.bind("<Key-7>", lambda x: write("7"))
 root.bind("<Key-8>", lambda x: write("8"))
 root.bind("<Key-9>", lambda x: write("9"))
-root.bind("<Key-0>", lambda x: write("0"))
+root.bind("<Key-0>", lambda x: write("0h"))
 
 root.bind("<BackSpace>", lambda x: delete_char())
 root.bind("<Delete>", lambda x: delete())
+root.bind("<%>", lambda x: percent())
+root.bind("<Control-minus>", lambda x: toggle_symbol())
 
 # Buttons
 button_1 = Button(root, text="1", width=3, height=2, command=lambda: write("1"))
