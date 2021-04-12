@@ -14,9 +14,10 @@ entry.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
 
 def write(value):
     entry["state"] = NORMAL
-    if (entry.get()).startswith("0"):
-        screen_num.set((entry.get())[:-1])
-    screen_num.set(entry.get() + value)
+    if len(entry.get()) == 0 and value == '0':
+        pass
+    else: 
+        screen_num.set(entry.get() + value)
     entry["state"] = DISABLED
 
 def delete():
@@ -104,7 +105,7 @@ root.bind("<Key-6>", lambda x: write("6"))
 root.bind("<Key-7>", lambda x: write("7"))
 root.bind("<Key-8>", lambda x: write("8"))
 root.bind("<Key-9>", lambda x: write("9"))
-root.bind("<Key-0>", lambda x: write("0h"))
+root.bind("<Key-0>", lambda x: write("0"))
 
 root.bind("<BackSpace>", lambda x: delete_char())
 root.bind("<Delete>", lambda x: delete())
