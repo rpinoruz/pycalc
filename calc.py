@@ -16,6 +16,8 @@ def write(value):
     entry["state"] = NORMAL
     if len(entry.get()) == 0 and value == '0':
         pass
+    elif len(entry.get()) == 0 and value == '.':
+        screen_num.set('0.')
     else: 
         screen_num.set(entry.get() + value)
     entry["state"] = DISABLED
@@ -106,6 +108,7 @@ root.bind("<Key-7>", lambda x: write("7"))
 root.bind("<Key-8>", lambda x: write("8"))
 root.bind("<Key-9>", lambda x: write("9"))
 root.bind("<Key-0>", lambda x: write("0"))
+root.bind("<.>", lambda x: write("."))
 
 root.bind("<BackSpace>", lambda x: delete_char())
 root.bind("<Delete>", lambda x: delete())
